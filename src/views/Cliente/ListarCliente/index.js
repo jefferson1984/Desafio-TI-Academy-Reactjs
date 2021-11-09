@@ -111,6 +111,7 @@ export const ListarCliente=()=>{
       <td>
        <Link to={"/pedidos-cliente/"+dados.id} className="btn btn-outline-primary btn-sm">Pedidos</Link>
        <Link to={"/editar-cliente/"+dados.id} className="btn btn-outline-primary btn-sm">Editar</Link>
+       <Link to={"/compras-cliente/"+dados.id} className="btn btn-outline-primary btn-sm">Compras</Link>
 
        <span  className="btn btn-outline-danger btn-sm" onClick={()=>excluirCliente(dados.id)}  >Excluir</span>
       </td>

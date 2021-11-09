@@ -37,7 +37,7 @@ export const ListarPedido=()=>{
         <div>
           <Container>
           <div className="p-2">
-                {status.type==='error' ? <Alert color={status.cor}>{status.message}</Alert> : ""}
+                {status.type==='error' ? <Alert color="danger">{status.message}</Alert> : ""}
                 </div>
               
               <div className="d-flex">
