@@ -4,33 +4,33 @@ import { Link } from "react-router-dom"
 import { Alert, Container, Table } from "reactstrap"
 import { api } from "../../../Config"
 
-export const ListarCompras=()=>{
-
+export const ListarItemCompra =()=>{
+ 
     const [data,setData]=useState([])
     const [status,setStatus]=useState({
-      type:'',
-      message:''
+        type:'',
+        message:'',
+        
     })
-   
-    const getCompras=async()=>{
 
-        await axios.get(api+'/listarcompras').then((response)=>{
-   
-         setData(response.data.dados)
+    const getItemCompra=async()=>{
+
+        await axios.get(api+'/listar/compra').then((response)=>{
+
+            setData(response.data.dados)
         }).catch(()=>{
-   
+
             setStatus({
-              type:'error',
-              message:'Não foi possível acessar Api.'
+                type:'error',
+                message:'Não foi possível acessar Api.',
+                cor:'danger'
             })
         })
-      }
+    }
 
-      useEffect(()=>{
-
-        getCompras()
-      },[])
-
+    useEffect(()=>{
+        getItemCompra()
+    },[])
 
     return(
 
@@ -38,55 +38,67 @@ export const ListarCompras=()=>{
           <Container>
           <div className="p-2">
                 {status.type==='error' ? <Alert color="danger">{status.message}</Alert> : ""}
+                
                 </div>
-
                <div className="d-flex">
                    <div className="m-auto p-2">
 
-                   <h1>Listar Compras</h1>
+                   <h1>Listar ItemCompra</h1>
                    </div>
                    <div className="p-2">
-                   <Link to="/cadastrar-compra" className="btn btn-outline-primary btn-sm">Cadastrar</Link>
+                   <Link to="/cadastrar-itemcompras" className="btn btn-outline-primary btn-sm">Cadastrar</Link>
                       <Link to="/listar-clientes" className="btn btn-outline-success btn-sm">Clientes</Link>
                       <Link to="/listar-pedidos" className="btn btn-outline-success btn btn-sm">Pedidos</Link>
                       <Link to="/listar-itempedidos" className="btn btn-outline-success btn btn-sm">ItemPedidos</Link>
                       <Link to="/listar-servicos" className="btn btn-outline-success btn btn-sm">Servicos</Link>
+                      <Link to="/listar-compras" className="btn btn-outline-success btn btn-sm">Compras</Link>
                    </div>
                   
                  
                </div>
-
+         
                <Table striped>
   <thead>
     <tr>
       <th>
-        ID
+        CompraId
       </th>
       <th>
-        Data
+        ProdutoId
       </th>
       <th>
-     ClienteId
+       Quantidade
       </th>
-     
-     
+      <th>
+      Valor
+      </th>
+      <th>
+        Ações
+      </th>
     </tr>
   </thead>
   <tbody>
       {data.map(dados=>(
             
-      <tr key={dados.id}>
+      <tr key={dados.CompraId}>
       <th scope="row" >
-        {dados.id}
+        {dados.CompraId}
       </th>
       <td>
-       {dados.data}
+       {dados.ProdutoId}
       </td>
       <td>
-        {dados.ClienteId}
+        {dados.quantidade}
       </td>
-     
-      
+      <td>
+        {dados.valor}
+      </td>
+      <td>
+       <Link to={"/compra-itemcompra/"+dados.CompraId} className="btn btn-outline-primary btn-sm">ItemPedidos</Link>
+       
+
+       
+      </td>
     </tr>
 
 
@@ -95,6 +107,7 @@ export const ListarCompras=()=>{
     
   </tbody>
 </Table>
+
 
 
           </Container>

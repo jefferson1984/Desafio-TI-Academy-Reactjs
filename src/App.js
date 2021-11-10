@@ -20,6 +20,14 @@ import { EditarServico } from "./views/Servico/EditarServico";
 import { CadastrarServico } from "./views/Servico/CadastrarServico";
 import { ListarCompras } from "./views/Compras/ListarCompras";
 import { EditarCompras } from "./views/Cliente/EditarCompras";
+import { CadastrarCompra } from "./views/Compras/CadastrarCompra";
+import { ListarItemCompra } from "./views/ItemCompra/ListarItemCompra";
+import { ItemCompraId } from "./views/ItemCompra/ItemCompraId";
+import { EditarItemCompra } from "./views/ItemCompra/EditarItemCompra";
+import { CadastrarItemCompra } from "./views/ItemCompra/CadastrarItemCompra";
+import { ListarProduto } from "./views/Produto/ListarProduto";
+import { EditarProduto } from "./views/Produto/EditarProduto";
+import { CadastrarProduto } from "./views/Produto/CadastrarProduto";
 
 function App() {
   return (
@@ -47,6 +55,14 @@ function App() {
       <Route path="/cadastrar-servico" component={CadastrarServico} />
       <Route path="/listar-compras" component={ListarCompras} />
       <Route path="/compras-cliente/:id" component={EditarCompras} />
+      <Route path="/cadastrar-compra" component={CadastrarCompra} />
+      <Route path="/listar-itemcompras" component={ListarItemCompra} />
+      <Route path="/compra-itemcompra/:id" component={ItemCompraId} />
+      <Route path="/editar-itemcompra/:id" component={EditarItemCompra} />
+      <Route path="/cadastrar-itemcompras" component={CadastrarItemCompra} />
+      <Route path="/listar-produtos" component={ListarProduto} />
+      <Route path="/editar-produto/:id" component={EditarProduto} />
+      <Route path="/cadastrar-produto" component={CadastrarProduto} />
 
       </Switch>
 

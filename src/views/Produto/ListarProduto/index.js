@@ -1,20 +1,22 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
+import { useState } from "react/cjs/react.development"
 import { Alert, Container, Table } from "reactstrap"
 import { api } from "../../../Config"
 
-export const ListarCompras=()=>{
+export const ListarProduto=()=>{
+   
 
     const [data,setData]=useState([])
     const [status,setStatus]=useState({
       type:'',
       message:''
     })
-   
-    const getCompras=async()=>{
 
-        await axios.get(api+'/listarcompras').then((response)=>{
+    const getProduto=async()=>{
+
+        await axios.get(api+'/listarprodutos').then((response)=>{
    
          setData(response.data.dados)
         }).catch(()=>{
@@ -26,11 +28,33 @@ export const ListarCompras=()=>{
         })
       }
 
+      const excluirProduto=async(idProduto)=>{
+
+        const headers={
+            'Content-Type':'application/json'
+        }
+
+        await axios.delete(api+'/excluirproduto/'+idProduto,{headers}).then(()=>{
+
+            setStatus({
+                type:'success',
+                message:'Produto excluido com sucesso.'
+              })
+              getProduto()
+        }).catch(()=>{
+                  
+            setStatus({
+                type:'error',
+                message:'Não foi possivel acessar Api.'
+              })
+
+        })
+      }
+
       useEffect(()=>{
 
-        getCompras()
+        getProduto()
       },[])
-
 
     return(
 
@@ -38,19 +62,22 @@ export const ListarCompras=()=>{
           <Container>
           <div className="p-2">
                 {status.type==='error' ? <Alert color="danger">{status.message}</Alert> : ""}
+                {status.type==='success' ? <Alert color="success">{status.message}</Alert> : ""}
                 </div>
 
                <div className="d-flex">
                    <div className="m-auto p-2">
 
-                   <h1>Listar Compras</h1>
+                   <h1>Visualizar Produtos</h1>
                    </div>
                    <div className="p-2">
-                   <Link to="/cadastrar-compra" className="btn btn-outline-primary btn-sm">Cadastrar</Link>
+                   <Link to="/cadastrar-produto" className="btn btn-outline-primary btn-sm">Cadastrar</Link>
                       <Link to="/listar-clientes" className="btn btn-outline-success btn-sm">Clientes</Link>
                       <Link to="/listar-pedidos" className="btn btn-outline-success btn btn-sm">Pedidos</Link>
                       <Link to="/listar-itempedidos" className="btn btn-outline-success btn btn-sm">ItemPedidos</Link>
                       <Link to="/listar-servicos" className="btn btn-outline-success btn btn-sm">Servicos</Link>
+                      <Link to="/listar-compras" className="btn btn-outline-success btn btn-sm">Compras</Link>
+                      <Link to="/listar-itemcompras" className="btn btn-outline-success btn btn-sm">ItemCompras</Link>
                    </div>
                   
                  
@@ -63,10 +90,13 @@ export const ListarCompras=()=>{
         ID
       </th>
       <th>
-        Data
+        Nome
       </th>
       <th>
-     ClienteId
+     Descrição
+      </th>
+      <th>
+    Açôes
       </th>
      
      
@@ -80,12 +110,16 @@ export const ListarCompras=()=>{
         {dados.id}
       </th>
       <td>
-       {dados.data}
+       {dados.nome}
       </td>
       <td>
-        {dados.ClienteId}
+       {dados.descricao}
       </td>
-     
+      
+      <td>
+      <Link to={"/editar-produto/"+dados.id} className="btn btn-outline-success btn-sm">Editar</Link>
+      <span   className="btn btn-outline-danger btn-sm" onClick={()=>excluirProduto(dados.id)}    >Excluir</span>
+      </td>
       
     </tr>
 
@@ -95,6 +129,7 @@ export const ListarCompras=()=>{
     
   </tbody>
 </Table>
+          
 
 
           </Container>
